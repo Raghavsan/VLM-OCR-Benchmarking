@@ -1,4 +1,4 @@
-# Virtual Environments (Never upload these)
+# Virtual Environments 
 venv*/
 .env/
 env/
@@ -10,7 +10,7 @@ env/
 __pycache__/
 *.pyc
 
-# Project Specific (Do not upload the raw proprietary dataset)
+# Project Specific 
 data/
 temp_resized_*.png
 *.txt
