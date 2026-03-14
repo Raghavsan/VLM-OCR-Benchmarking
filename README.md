@@ -1,13 +1,13 @@
 # SOTA Document Extraction & VLM Benchmarking Pipeline
 
-## 📌 Overview
+##  Overview
 An automated benchmarking suite designed to evaluate state-of-the-art Vision-Language Models (VLMs) and specialized OCR vision agents. This project tests model performance against highly degraded, noisy, and complex document datasets, including cursive handwriting, faded receipts, signposts, and dense text layouts. 
 
 To bridge the gap between raw, degraded pixels and the models' Vision Transformers (ViTs), a custom **OpenCV preprocessing engine** was engineered, significantly boosting recognition accuracy on low-contrast and salt-and-pepper noise images.
 
 ---
 
-## 🚀 Evaluated Architectures
+##  Evaluated Architectures
 
 ### 1. GLM-OCR (Generative VLM)
 * **Approach:** GLM-OCR is a highly capable Vision-Language Model. Because it is generative, it initially hallucinated complex document structures (e.g., turning abbreviations into vertical lists). This was countered using strict prompt engineering to force continuous left-to-right, top-to-bottom extraction.
@@ -28,7 +28,7 @@ To bridge the gap between raw, degraded pixels and the models' Vision Transforme
 
 ---
 
-## 👁️‍🗨️ OpenCV Image Preprocessing
+## OpenCV Image Preprocessing
 To maximize accuracy on heavily degraded datasets, an image enhancement layer was applied *before* the images reached the models.
 
 1. **Grayscale Conversion:** Removed distracting color data.
@@ -37,7 +37,7 @@ To maximize accuracy on heavily degraded datasets, an image enhancement layer wa
 
 ---
 
-## 📊 Evaluation Results
+## Evaluation Results
 Performance was quantified using strictly calculated Character Error Rate (CER), Word Error Rate (WER), and total Accuracy across 36 distinct file groups. 
 
 *Integrating the OpenCV preprocessing engine yielded the highest overall accuracy, pushing GLM-OCR to the top of the benchmark.*
@@ -52,7 +52,7 @@ Performance was quantified using strictly calculated Character Error Rate (CER),
 
 ---
 
-## 💻 Project Structure
+## Project Structure
 
 ```text
 VLM-OCR-Benchmarking/
@@ -73,7 +73,7 @@ VLM-OCR-Benchmarking/
         └── ground_truth/
             └── category_1_000.txt
 
-⚙️ Installation & Usage
+Installation & Usage
 
 Hardware Requirements: The scripts auto-detect Apple Silicon (MPS), CUDA, or fallback to CPU.
 Crucial Note: Because these models utilize conflicting dependency architectures, you must use isolated virtual environments.
