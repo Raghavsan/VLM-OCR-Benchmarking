@@ -13,10 +13,8 @@ def load_glm_pipeline():
     
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     
-    # 1. FIX: Use AutoProcessor to handle both images and text
     processor = AutoProcessor.from_pretrained("zai-org/GLM-OCR", trust_remote_code=True)
     
-    # 2. FIX: Use the correct Vision-Language AutoClass
     model = AutoModelForImageTextToText.from_pretrained(
         "zai-org/GLM-OCR",
         torch_dtype=torch.bfloat16,
@@ -79,7 +77,6 @@ def process_and_evaluate(root_path, img_folder_name="images", txt_folder_name="g
                 image = image.resize((new_w, new_h), Image.Resampling.LANCZOS)
                 print(f"   [!] Resized {width}x{height} down to {new_w}x{new_h}")
             
-           # 3. FIX: Generate the strict prompt with image placeholders
             messages = [
                 {
                     "role": "user",
