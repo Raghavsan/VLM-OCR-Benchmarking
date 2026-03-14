@@ -1,13 +1,13 @@
 # SOTA Document Extraction & VLM Benchmarking Pipeline
 
-## Overview
+## 📌 Overview
 An automated benchmarking suite designed to evaluate state-of-the-art Vision-Language Models (VLMs) and specialized OCR vision agents. This project tests model performance against highly degraded, noisy, and complex document datasets, including cursive handwriting, faded receipts, signposts, and dense text layouts. 
 
 To bridge the gap between raw, degraded pixels and the models' Vision Transformers (ViTs), a custom **OpenCV preprocessing engine** was engineered, significantly boosting recognition accuracy on low-contrast and salt-and-pepper noise images.
 
 ---
 
-## Evaluated Architectures
+## 🚀 Evaluated Architectures
 
 ### 1. GLM-OCR (Generative VLM)
 * **Approach:** GLM-OCR is a highly capable Vision-Language Model. Because it is generative, it initially hallucinated complex document structures (e.g., turning abbreviations into vertical lists). This was countered using strict prompt engineering to force continuous left-to-right, top-to-bottom extraction.
@@ -34,9 +34,6 @@ To maximize accuracy on heavily degraded datasets, an image enhancement layer wa
 1. **Grayscale Conversion:** Removed distracting color data.
 2. **CLAHE (Contrast Limited Adaptive Histogram Equalization):** Aggressively darkened faded ink while whitening grayish backgrounds.
 3. **Non-Local Means Denoising:** (`cv2.fastNlMeansDenoising`) Smoothed out digital grain and artifact blur without destroying the sharp edges of the typography.
-
-![OpenCV Preprocessing Example](assets/opencv_preprocessing_example.png)
-*(Note: Place your before/after image in an `assets` folder and update this path)*
 
 ---
 
@@ -75,3 +72,41 @@ VLM-OCR-Benchmarking/
         │   └── category_1_000.png
         └── ground_truth/
             └── category_1_000.txt
+
+⚙️ Installation & Usage
+
+Hardware Requirements: The scripts auto-detect Apple Silicon (MPS), CUDA, or fallback to CPU.
+Crucial Note: Because these models utilize conflicting dependency architectures, you must use isolated virtual environments.
+1. Set up your Data Directory
+
+Ensure your dataset follows the structure outlined in sample_data/. You can pass your custom data directory path at runtime using the --data_dir argument.
+2. Running GLM-OCR
+
+GLM requires a bleeding-edge installation of Hugging Face transformers directly from source.
+Bash
+
+python3.11 -m venv venv_glm
+source venv_glm/bin/activate
+
+pip install git+[https://github.com/huggingface/transformers.git](https://github.com/huggingface/transformers.git)
+pip install torch torchvision Pillow opencv-python numpy
+
+python inference_glm.py --data_dir ./your_data_folder
+
+3. Running Florence-2 & Surya OCR
+
+These models require stable, specific versions of transformers.
+Bash
+
+python3.11 -m venv venv_stable
+source venv_stable/bin/activate
+
+# Install strictly compatible versions
+pip install torch torchvision Pillow opencv-python numpy timm einops
+pip install transformers==4.56.1 surya-ocr
+
+# Run Florence-2
+python inference_florence.py --data_dir ./your_data_folder
+
+# Run Surya
+python inference_surya.py --data_dir ./your_data_folder
