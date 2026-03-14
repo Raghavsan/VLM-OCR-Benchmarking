@@ -1,0 +1,19 @@
+# Virtual Environments (Never upload these)
+venv*/
+.env/
+env/
+
+# Mac OS junk files
+.DS_Store
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Project Specific (Do not upload the raw proprietary dataset)
+data/
+temp_resized_*.png
+*.txt
+
+# Ignore temporary evaluation outputs if you saved them
+predictions/
